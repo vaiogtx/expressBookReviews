@@ -11,4 +11,30 @@ let books = {
       10: {"author": "Samuel Beckett","title": "Molloy, Malone Dies, The Unnamable, the trilogy", "reviews": {} }
 }
 
-module.exports=books;
+const getAll = () => Promise.resolve(books);
+const getByISBN = (isbn) => Promise.resolve(books[isbn]);
+// const getByAuthor = (author) => Promise.resolve(Object.keys(books).forEach());
+
+const getByAuthor = (author) => {
+      return new Promise(function(resolve, reject) {
+            let list = [];
+            Object.keys(books).forEach((key) => {
+                  if (books[key].author === author) list.push(books[key]);
+            });
+            resolve(list);
+      });
+};
+
+const getByTitle = (title) => {
+      return new Promise((resolve, reject) =>{
+            let list = [];
+            Object.keys(books).forEach((key) => {
+              if (books[key].title.includes(title)) list.push(books[key]);
+            });
+            resolve(list);
+      });
+};
+
+module.exports = {
+      books, getAll, getByISBN, getByAuthor, getByTitle
+};
